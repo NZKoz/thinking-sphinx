@@ -50,27 +50,27 @@ class ThinkingSphinx::Context
   # messy dependencies issues).
   #
   def load_models
-    ThinkingSphinx::Configuration.instance.model_directories.each do |base|
-      Dir["#{base}**/*.rb"].each do |file|
-        model_name = file.gsub(/^#{base}([\w_\/\\]+)\.rb/, '\1')
+    #ThinkingSphinx::Configuration.instance.model_directories.each do |base|
+      #Dir["#{base}**/*.rb"].each do |file|
+        #model_name = file.gsub(/^#{base}([\w_\/\\]+)\.rb/, '\1')
 
-        next if model_name.nil?
-        camelized_model = model_name.camelize
-        next if ::ActiveRecord::Base.descendants.detect { |model|
-          model.name == camelized_model
-        }
+        #next if model_name.nil?
+        #camelized_model = model_name.camelize
+        #next if ::ActiveRecord::Base.descendants.detect { |model|
+          #model.name == camelized_model
+        #}
 
-        begin
-          camelized_model.constantize
-        rescue LoadError
-          # Make sure that STI subclasses in subfolders are loaded.
-          model_name.gsub!(/.*[\/\\]/, '').nil? ? next : retry
-        rescue Exception => err
-          STDERR.puts "Warning: Error loading #{file}:"
-          STDERR.puts err.message
-          STDERR.puts err.backtrace.join("\n"), ''
-        end
-      end
-    end
+        #begin
+          #camelized_model.constantize
+        #rescue LoadError
+          ## Make sure that STI subclasses in subfolders are loaded.
+          #model_name.gsub!(/.*[\/\\]/, '').nil? ? next : retry
+        #rescue Exception => err
+          #STDERR.puts "Warning: Error loading #{file}:"
+          #STDERR.puts err.message
+          #STDERR.puts err.backtrace.join("\n"), ''
+        #end
+      #end
+    #end
   end
 end
